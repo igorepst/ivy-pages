@@ -3,10 +3,11 @@
 ;; Copyright (C) 2016 Igor Epstein
 
 ;; Author: Igor Epstein <igorepst@gmail.com>
+;; URL: https://github.com/igorepst/counsel-pages
 ;; Created: 07/24/2016
 ;; Package-Version: 20160724.001
 ;; Version: 0.1
-;; Package-Requires: ((emacs "24.1") (swiper "0.8.0"))
+;; Package-Requires: ((emacs "24.1") (ivy "0.8.0"))
 ;; Keywords: convenience, matching
 
 ;; This file is not part of GNU Emacs.
