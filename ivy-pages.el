@@ -85,7 +85,7 @@
 	    :action (lambda (x)
 		      (goto-char (cdr x))
 		      (recenter-top-bottom 0))
-	    :history ivy-pages-history
+	    :history 'ivy-pages-history
 	    :require-match t
 	    :caller 'ivy-pages))
 
