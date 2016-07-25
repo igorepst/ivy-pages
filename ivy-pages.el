@@ -1,9 +1,9 @@
-;;; counsel-pages.el --- Complete current buffer's pages with Ivy -*- lexical-binding: t -*-
+;;; ivy-pages.el --- Complete current buffer's pages with Ivy -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2016 Igor Epstein
 
 ;; Author: Igor Epstein <igorepst@gmail.com>
-;; URL: https://github.com/igorepst/counsel-pages
+;; URL: https://github.com/igorepst/ivy-pages
 ;; Created: 07/24/2016
 ;; Package-Version: 20160724.001
 ;; Version: 0.1
@@ -27,7 +27,7 @@
 
 ;;; Commentary:
 ;;
-;; Call `counsel-pages' to jump between pages in a document using Ivy.
+;; Call `ivy-pages' to jump between pages in a document using Ivy.
 ;;
 ;; Based on built-in `page-ext.el' and inspired by `helm-pages.el' from
 ;; https://github.com/david-christiansen/helm-pages/blob/master/helm-pages.el
@@ -36,29 +36,29 @@
 
 (require 'ivy)
 
-(defvar counsel-pages--page-delimiter "^\014"
+(defvar ivy-pages--page-delimiter "^\014"
   "Regexp describing line-beginnings that separate pages.")
 
-(defvar counsel-pages-history nil
-  "History for the counsel pages.")
+(defvar ivy-pages-history nil
+  "History for the `ivy-pages'.")
 
-(defun counsel-pages-function ()
+(defun ivy-pages-function ()
   "Build list of pages and their positions."
-  (let ((counsel-pages-list ()))
+  (let ((ivy-pages-list ()))
     (save-excursion
       (goto-char (point-min))
       (save-restriction
 	(if (and (save-excursion
-		   (re-search-forward counsel-pages--page-delimiter nil t))
+		   (re-search-forward ivy-pages--page-delimiter nil t))
 		 (= 1 (match-beginning 0)))
 	    (goto-char (match-end 0)))
-	(push (counsel-pages-get-header-and-position) counsel-pages-list)
+	(push (ivy-pages-get-header-and-position) ivy-pages-list)
 
-	(while (re-search-forward counsel-pages--page-delimiter nil t)
-	  (push (counsel-pages-get-header-and-position) counsel-pages-list))))
-    (nreverse counsel-pages-list)))
+	(while (re-search-forward ivy-pages--page-delimiter nil t)
+	  (push (ivy-pages-get-header-and-position) ivy-pages-list))))
+    (nreverse ivy-pages-list)))
 
-(defun counsel-pages-get-header-and-position ()
+(defun ivy-pages-get-header-and-position ()
   "Get page header and its position."
   (skip-chars-forward " \t\n")
   (let* ((start (point))
@@ -68,26 +68,27 @@
 			 (number-to-string start))))
     (cons substr start)))
 
-(defun counsel-pages-transformer (header)
+(defun ivy-pages-transformer (header)
   "Return HEADER without start point."
   (replace-regexp-in-string ":[0-9]+$" "" header))
 
 (ivy-set-display-transformer
- 'counsel-pages
- 'counsel-pages-transformer)
+ 'ivy-pages
+ 'ivy-pages-transformer)
 
-(defun counsel-pages ()
-  "Select buffer's pages via `counsel'."
+;;;###autoload
+(defun ivy-pages ()
+  "Select buffer's pages via `ivy'."
   (interactive)
   (ivy-read "Pages: "
-	    (counsel-pages-function)
+	    (ivy-pages-function)
 	    :action (lambda (x)
 		      (goto-char (cdr x))
 		      (recenter-top-bottom 0))
-	    :history counsel-pages-history
+	    :history ivy-pages-history
 	    :require-match t
-	    :caller 'counsel-pages))
+	    :caller 'ivy-pages))
 
-(provide 'counsel-pages)
+(provide 'ivy-pages)
 
-;;; counsel-pages.el ends here
+;;; ivy-pages.el ends here
