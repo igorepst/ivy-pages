@@ -6,7 +6,7 @@
 ;; URL: https://github.com/igorepst/ivy-pages
 ;; Created: 07/24/2016
 ;; Package-Version: 20160724.001
-;; Version: 0.1
+;; Version: 0.1.1
 ;; Package-Requires: ((emacs "24.1") (ivy "0.8.0"))
 ;; Keywords: convenience, matching
 
@@ -84,10 +84,11 @@
 	    (ivy-pages-function)
 	    :action (lambda (x)
 		      ;; Support both stable and unstable versions of Ivy 0.8.0
-		      (if (listp x)
-			  (goto-char (cdr x))
-			(goto-char x))
-		      (recenter-top-bottom 0))
+		      (with-ivy-window
+			(if (listp x)
+			    (goto-char (cdr x))
+			  (goto-char x))
+			(recenter-top-bottom 0)))
 	    :history 'ivy-pages-history
 	    :require-match t
 	    :caller 'ivy-pages))
