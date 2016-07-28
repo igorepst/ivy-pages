@@ -83,7 +83,10 @@
   (ivy-read "Pages: "
 	    (ivy-pages-function)
 	    :action (lambda (x)
-		      (goto-char (cdr x))
+		      ;; Support both stable and unstable versions of Ivy 0.8.0
+		      (if (listp x)
+			  (goto-char (cdr x))
+			(goto-char x))
 		      (recenter-top-bottom 0))
 	    :history 'ivy-pages-history
 	    :require-match t
