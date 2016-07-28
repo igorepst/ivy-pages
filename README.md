@@ -3,8 +3,4 @@ Emacs: jump between pages in a document with Ivy
 
 # Installation
 
-Put `ivy-pages.el` in your `load-path` and add to your init file:
-
-``` elisp
-(require 'ivy-pages)
-```
+Put `ivy-pages.el` in your `load-path` and call `ivy-pages` (autoloaded) to select a page to jump to
