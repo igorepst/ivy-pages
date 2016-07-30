@@ -1,4 +1,7 @@
 # ivy-pages
+
+[![MELPA](http://melpa.org/packages/ivy-pages-badge.svg)](http://melpa.org/#/ivy-pages)
+
 Emacs: jump between pages in a document with Ivy
 
 # Installation
